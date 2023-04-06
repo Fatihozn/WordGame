@@ -15,6 +15,8 @@
 		4AF72D8A29D974B900E00A79 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4AF72D8829D974B900E00A79 /* Main.storyboard */; };
 		4AF72D8C29D974BB00E00A79 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4AF72D8B29D974BB00E00A79 /* Assets.xcassets */; };
 		4AF72D8F29D974BB00E00A79 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4AF72D8D29D974BB00E00A79 /* LaunchScreen.storyboard */; };
+		4AF72D9629D975C700E00A79 /* MainVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF72D9529D975C700E00A79 /* MainVC.swift */; };
+		4AF72D9829D975E400E00A79 /* ResultVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF72D9729D975E400E00A79 /* ResultVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,6 +29,8 @@
 		4AF72D8929D974B900E00A79 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		4AF72D8B29D974BB00E00A79 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4AF72D8E29D974BB00E00A79 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		4AF72D9529D975C700E00A79 /* MainVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainVC.swift; sourceTree = "<group>"; };
+		4AF72D9729D975E400E00A79 /* ResultVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,6 +71,8 @@
 				4AF72D8829D974B900E00A79 /* Main.storyboard */,
 				4AF72D8B29D974BB00E00A79 /* Assets.xcassets */,
 				4AF72D8D29D974BB00E00A79 /* LaunchScreen.storyboard */,
+				4AF72D9529D975C700E00A79 /* MainVC.swift */,
+				4AF72D9729D975E400E00A79 /* ResultVC.swift */,
 			);
 			path = WordGame;
 			sourceTree = "<group>";
@@ -144,7 +150,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4AF72D9829D975E400E00A79 /* ResultVC.swift in Sources */,
 				4AF72D8529D974B900E00A79 /* GameScene.swift in Sources */,
+				4AF72D9629D975C700E00A79 /* MainVC.swift in Sources */,
 				4AF72D8729D974B900E00A79 /* GameViewController.swift in Sources */,
 				4AF72D7F29D974B900E00A79 /* AppDelegate.swift in Sources */,
 			);
@@ -307,9 +315,12 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.fatih.WordGame;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -334,9 +345,12 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.fatih.WordGame;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
