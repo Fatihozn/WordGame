@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4AB00C8629E59D9300F401CB /* CoreData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4AB00C8429E59D9300F401CB /* CoreData.xcdatamodeld */; };
+		4ABD009B29EC370D0048065A /* kelimeler.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4ABD009A29EC370C0048065A /* kelimeler.txt */; };
+		4ABD009D29ED0B740048065A /* String+ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ABD009C29ED0B740048065A /* String+ext.swift */; };
 		4AF72D7F29D974B900E00A79 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF72D7E29D974B900E00A79 /* AppDelegate.swift */; };
 		4AF72D8129D974B900E00A79 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 4AF72D8029D974B900E00A79 /* GameScene.sks */; };
 		4AF72D8329D974B900E00A79 /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = 4AF72D8229D974B900E00A79 /* Actions.sks */; };
@@ -20,6 +23,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4AB00C8529E59D9300F401CB /* CoreData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CoreData.xcdatamodel; sourceTree = "<group>"; };
+		4ABD009A29EC370C0048065A /* kelimeler.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = kelimeler.txt; sourceTree = "<group>"; };
+		4ABD009C29ED0B740048065A /* String+ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+ext.swift"; sourceTree = "<group>"; };
 		4AF72D7B29D974B900E00A79 /* WordGame.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WordGame.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4AF72D7E29D974B900E00A79 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4AF72D8029D974B900E00A79 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
@@ -73,6 +79,9 @@
 				4AF72D8D29D974BB00E00A79 /* LaunchScreen.storyboard */,
 				4AF72D9529D975C700E00A79 /* MainVC.swift */,
 				4AF72D9729D975E400E00A79 /* ResultVC.swift */,
+				4AB00C8429E59D9300F401CB /* CoreData.xcdatamodeld */,
+				4ABD009A29EC370C0048065A /* kelimeler.txt */,
+				4ABD009C29ED0B740048065A /* String+ext.swift */,
 			);
 			path = WordGame;
 			sourceTree = "<group>";
@@ -136,6 +145,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4AF72D8A29D974B900E00A79 /* Main.storyboard in Resources */,
+				4ABD009B29EC370D0048065A /* kelimeler.txt in Resources */,
 				4AF72D8129D974B900E00A79 /* GameScene.sks in Resources */,
 				4AF72D8C29D974BB00E00A79 /* Assets.xcassets in Resources */,
 				4AF72D8F29D974BB00E00A79 /* LaunchScreen.storyboard in Resources */,
@@ -150,8 +160,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4ABD009D29ED0B740048065A /* String+ext.swift in Sources */,
 				4AF72D9829D975E400E00A79 /* ResultVC.swift in Sources */,
 				4AF72D8529D974B900E00A79 /* GameScene.swift in Sources */,
+				4AB00C8629E59D9300F401CB /* CoreData.xcdatamodeld in Sources */,
 				4AF72D9629D975C700E00A79 /* MainVC.swift in Sources */,
 				4AF72D8729D974B900E00A79 /* GameViewController.swift in Sources */,
 				4AF72D7F29D974B900E00A79 /* AppDelegate.swift in Sources */,
@@ -376,6 +388,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		4AB00C8429E59D9300F401CB /* CoreData.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				4AB00C8529E59D9300F401CB /* CoreData.xcdatamodel */,
+			);
+			currentVersion = 4AB00C8529E59D9300F401CB /* CoreData.xcdatamodel */;
+			path = CoreData.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 4AF72D7329D974B900E00A79 /* Project object */;
 }
