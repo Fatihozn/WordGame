@@ -50,6 +50,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4ABD009E29EFB95A0048065A /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				4AF72D8B29D974BB00E00A79 /* Assets.xcassets */,
+				4AF72D8D29D974BB00E00A79 /* LaunchScreen.storyboard */,
+				4AB00C8429E59D9300F401CB /* CoreData.xcdatamodeld */,
+				4ABD009A29EC370C0048065A /* kelimeler.txt */,
+				4ABD009C29ED0B740048065A /* String+ext.swift */,
+				4AF72D8029D974B900E00A79 /* GameScene.sks */,
+				4AF72D8229D974B900E00A79 /* Actions.sks */,
+			);
+			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
 		4AF72D7229D974B900E00A79 = {
 			isa = PBXGroup;
 			children = (
@@ -69,19 +83,13 @@
 		4AF72D7D29D974B900E00A79 /* WordGame */ = {
 			isa = PBXGroup;
 			children = (
+				4ABD009E29EFB95A0048065A /* Supporting Files */,
 				4AF72D7E29D974B900E00A79 /* AppDelegate.swift */,
-				4AF72D8029D974B900E00A79 /* GameScene.sks */,
-				4AF72D8229D974B900E00A79 /* Actions.sks */,
 				4AF72D8429D974B900E00A79 /* GameScene.swift */,
 				4AF72D8629D974B900E00A79 /* GameViewController.swift */,
 				4AF72D8829D974B900E00A79 /* Main.storyboard */,
-				4AF72D8B29D974BB00E00A79 /* Assets.xcassets */,
-				4AF72D8D29D974BB00E00A79 /* LaunchScreen.storyboard */,
 				4AF72D9529D975C700E00A79 /* MainVC.swift */,
 				4AF72D9729D975E400E00A79 /* ResultVC.swift */,
-				4AB00C8429E59D9300F401CB /* CoreData.xcdatamodeld */,
-				4ABD009A29EC370C0048065A /* kelimeler.txt */,
-				4ABD009C29ED0B740048065A /* String+ext.swift */,
 			);
 			path = WordGame;
 			sourceTree = "<group>";
