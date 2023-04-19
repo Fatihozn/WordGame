@@ -7,8 +7,6 @@
 
 import UIKit
 
-
-
 class ResultVC: UIViewController {
     
     @IBOutlet weak var currentScoreLabel: UILabel!
