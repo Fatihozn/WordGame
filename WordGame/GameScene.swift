@@ -25,6 +25,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var created = false
     var deleted = false
+    var isPause = false
     var index = 0
     var threeCounter = 0
     var falled = false
@@ -33,10 +34,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var currentScore = 0
     var goToResult = true
     var silent = 0
-    //var iceBox = 0
+    var iceBox = 0
     
     var blocks = [SKSpriteNode]()
     var checkBlocks = [SKSpriteNode]()
+    var iceBlocks = [SKSpriteNode]()
     var contactBloks = [SKSpriteNode]()
     
     var silents = ["B","C","Ç","D","F","G","Ğ","H","J","K","L","M","N","P","R","S","Ş","T","V","Y","Z"]
@@ -49,10 +51,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
         self.physicsWorld.contactDelegate = self
         
-        let pause: SKShapeNode = SKShapeNode(rect: CGRect(x: 110, y: -140, width: 70, height: 70), cornerRadius: 20)
-        pause.fillColor = .yellow
-        pause.zPosition = 3
-        addChild(pause)
+        
+//        let pause: SKShapeNode = SKShapeNode(rect: CGRect(x: 110, y: -140, width: 70, height: 70), cornerRadius: 20)
+//        pause.fillColor = .yellow
+//        pause.zPosition = 3
+//        addChild(pause)
         
         if let tempKarakter = self.childNode(withName: "skorLabel") as? SKLabelNode {
             skorLabel = tempKarakter
@@ -62,13 +65,21 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             wordLabel = tempKarakter
         }
      
-        fallingTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(falling), userInfo: nil, repeats: true)
+        startFallingTimer()
+        startThreeRowsTimer()
         
-        threeRowsTimer = Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(threeRows), userInfo: nil, repeats: true)
+    }
+    
+    func startFallingTimer() {
+        fallingTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(falling), userInfo: nil, repeats: true)
     }
     
     func startCreating() {
         createBlockTimer = Timer.scheduledTimer(timeInterval: TimeInterval(time), target: self, selector: #selector(randomCreate), userInfo: nil, repeats: true)
+    }
+    
+    func startThreeRowsTimer() {
+        threeRowsTimer = Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(threeRows), userInfo: nil, repeats: true)
     }
     
     @objc func randomCreate() {
@@ -148,7 +159,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let randomSilents = Int.random(in: 0 ..< silents.count)
         let randomVowels = Int.random(in: 0 ..< vowels.count)
         
-        let randomArr = [1,1,1,1,1,0,0,0,0,0].shuffled()
+        let randomArr = [1,1,1,1,1,1,1,0,0,0].shuffled()
         let randomIndex = Int.random(in: 0 ..< randomArr.count)
         let selectedItem = randomArr[randomIndex]
         // random elemanın gelme oranı için oluşturuldu bu kısım
@@ -157,13 +168,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if let myShape = myShape {
             myShape.strokeColor = .red
             
-//            if iceBox == 5 {
-//                myShape.fillColor = .systemBlue
-//                iceBox = 0
-//            } else {
-//                myShape.fillColor = .green
-//                iceBox += 1
-//            }
+            if iceBox == 5 {
+                myShape.fillColor = .cyan
+                iceBox = 0
+            } else {
+                myShape.fillColor = .green
+                iceBox += 1
+            }
            
             myShape.lineWidth = 5
             myShape.lineCap = .round
@@ -176,11 +187,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 
                 let label = SKLabelNode(fontNamed: "Arial")
                 
-//                if iceBox == 0 {
-//                    label.color = .blue
-//                } else {
-//                    label.color = .green
-//                }
+                if iceBox == 0 {
+                    label.color = .cyan
+                } else {
+                    label.color = .green
+                }
                 
                 if selectedItem == 1 && silent < 3{
                     label.text = silents[randomSilents]
@@ -366,6 +377,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 let newBoxLabel = label.text?.replacingOccurrences(of: " ", with: "")
                 label.text = newBoxLabel
             }
+            iceBlocks.removeAll()
             checkBlocks.removeAll()
             wordLabel.text = ""
         }
@@ -386,10 +398,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func doubleClicked(sprite: SKSpriteNode, label: SKLabelNode) {
-        
+
         let clickShape = SKShapeNode(rect: CGRect(x:0, y:0, width: 70, height: 75))
         clickShape.strokeColor = .red
-        clickShape.fillColor = .green
+        
+        if label.color == .cyan {
+            clickShape.fillColor = .cyan
+        } else {
+            clickShape.fillColor = .green
+        }
+        
         clickShape.lineWidth = 5
         clickShape.lineCap = .round
         label.fontColor = .black
@@ -407,12 +425,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             
                 if let sprite = touchedNode as? SKSpriteNode {
                                         
-                    if sprite.children.count > 0  {
+                    if sprite.children.count > 0 && !isPause {
                         
                         let label = sprite.children[0] as! SKLabelNode
                         
                         if label.text!.contains(" ") {
-                            print("ikinci tıklama")
                             removeChar(character: label.text!.first!)
                             // ikinci tıklamada karakter labeldan siliniyor
                             
@@ -422,15 +439,23 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                             if let index = checkBlocks.firstIndex(of: sprite) {
                                 checkBlocks.remove(at: index)
                             }
+                            if let index = iceBlocks.firstIndex(of: sprite){
+                                iceBlocks.remove(at: index)
+                            }
                           
                             doubleClicked(sprite: sprite, label: label)// tasarım
                             
                         }
-//                            else if label.color == .blue {
-//                            print("buz")
-//                        }
+                        else if label.color == .cyan {
+                            wordLabel.text! += (label.text ?? "") + " "
+                            
+                            label.text = (label.text ?? "") + " "
+                            
+                            clicked(sprite: sprite, label: label)// tasarım
+                            checkBlocks.append(sprite)
+                            iceBlocks.append(sprite)
+                        }
                         else {
-                            print("ilk tıklama normal")
                             wordLabel.text! += (label.text ?? "") + " "
                             
                             label.text = (label.text ?? "") + " "
@@ -443,16 +468,53 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                         
                     }
                     
+                    if sprite.name == "pause" {
+                        if !isPause {
+                            let image = UIImage(named: "start")
+                            let texture = SKTexture(image: image!)
+                            sprite.texture = texture
+                            fallingTimer?.invalidate()
+                            createBlockTimer?.invalidate()
+                            isPause = true
+                        } else {
+                            let image = UIImage(named: "pause")
+                            let texture = SKTexture(image: image!)
+                            sprite.texture = texture
+                            startFallingTimer()
+                            if falled {
+                                startCreating()
+                            }
+                            isPause = false
+                        }
+                        
+                    }
+                    
                     if sprite.name == "check" && checkBlocks.count > 3 { // && checkBlocks.count > 3
                         // burada kelime kontrolü yapılacak
                         let text = wordLabel.text!.replacingOccurrences(of: " ", with: "")
                         
-                        if getWordsWithText(word: text) {
+                        if getWordsWithText(word: "deliorman") {
                             
                             if blocks.count > 0{
-                                for sprite in checkBlocks {
+                                
+                                let setIces = Set(checkBlocks)
+                                let setChecks = Set(iceBlocks)
+                                
+                                let setDiff = setIces.subtracting(setChecks)
+                                
+                                let arrayDiff = Array(setDiff)
+                                
+                                for sprite in arrayDiff {
                                     sprite.removeFromParent()
                                     checkBlocks.removeAll()
+                                }
+                                for iceSprite in iceBlocks {
+                                    let label = iceSprite.children[0] as! SKLabelNode
+                                    let newBoxLabel = label.text?.replacingOccurrences(of: " ", with: "")
+                                    label.text = newBoxLabel
+                                    label.color = .green
+                                    doubleClicked(sprite: iceSprite, label: label)
+                                    iceBlocks.removeAll()
                                 }
                                 
                                 calculatePoint(label: wordLabel.text!)
@@ -482,19 +544,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
     }
     
-    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for t in touches { self.touchMoved(toPoint: t.location(in: self)) }
-    }
-    
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for t in touches { self.touchUp(atPoint: t.location(in: self)) }
-    }
-    
-    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for t in touches { self.touchUp(atPoint: t.location(in: self)) }
-    }
-    
-    override func update(_ currentTime: TimeInterval) {
-        // Called before each frame is rendered
-    }
+//    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+//        for t in touches { self.touchMoved(toPoint: t.location(in: self)) }
+//    }
+//
+//    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+//        for t in touches { self.touchUp(atPoint: t.location(in: self)) }
+//    }
+//
+//    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
+//        for t in touches { self.touchUp(atPoint: t.location(in: self)) }
+//    }
+//
+//    override func update(_ currentTime: TimeInterval) {
+//        // Called before each frame is rendered
+//    }
 }

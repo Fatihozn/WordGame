@@ -14,7 +14,11 @@ extension String {
         var splitedText = self.split(separator: "")
         
         for (i, char) in splitedText.enumerated() {
-            splitedText[i] = dict[char] ?? ""
+            if dict[char] == nil {
+                splitedText[i] = char
+            } else {
+                splitedText[i] = dict[char] ?? ""
+            }
         }
         let newText = splitedText.joined()
         
