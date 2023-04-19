@@ -33,7 +33,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var currentScore = 0
     var goToResult = true
     var silent = 0
-    var iceBox = 0
+    var iceBox = 1
+    var randomIce = Int.random(in: 3 ..< 5)
     
     var blocks = [SKSpriteNode]()
     var checkBlocks = [SKSpriteNode]()
@@ -159,15 +160,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         // random elemanın gelme oranı için oluşturuldu bu kısım
         myShape = SKShapeNode(rect: CGRect(x:0, y:0, width: 70, height: 75))
         
+        
+        
         if let myShape = myShape {
             myShape.strokeColor = .red
             
-            if iceBox == 8 {
+            if iceBox == randomIce {
                 myShape.fillColor = .systemBlue
                 iceBox = 0
+                randomIce = Int.random(in: 3 ..< 7)
             } else {
                 myShape.fillColor = .green
-                iceBox += 1
+                if blocks.count > 22 {
+                    iceBox += 1
+                }
             }
            
             myShape.lineWidth = 5
@@ -505,7 +511,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                         
                     }
                     
-                    if sprite.name == "check" && checkBlocks.count > 3 { // && checkBlocks.count > 3
+                    if sprite.name == "check" && checkBlocks.count > 2 { // && checkBlocks.count > 3
                         // burada kelime kontrolü yapılacak
                         let text = wordLabel.text!.replacingOccurrences(of: " ", with: "")
                         
@@ -534,8 +540,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                                     label.color = .green
                                     doubleClicked(sprite: iceSprite, label: label)
                                     iceBlocks.removeAll()
-                                    
-                                    
                                     
                                 }
                                 
