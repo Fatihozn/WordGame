@@ -39,6 +39,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var blocks = [SKSpriteNode]()
     var checkBlocks = [SKSpriteNode]()
     var iceBlocks = [SKSpriteNode]()
+    var mainIceBlocks = [SKSpriteNode]()
     var contactBloks = [SKSpriteNode]()
     
     var silents = ["B","C","Ç","D","F","G","Ğ","H","J","K","L","M","N","P","R","S","Ş","T","V","Y","Z"]
@@ -168,8 +169,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if let myShape = myShape {
             myShape.strokeColor = .red
             
-            if iceBox == 5 {
-                myShape.fillColor = .cyan
+            if iceBox == 8 {
+                myShape.fillColor = .systemBlue
                 iceBox = 0
             } else {
                 myShape.fillColor = .green
@@ -225,6 +226,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     block.position = CGPoint(x: coordinate, y: -220)
                 }
                 
+                if iceBox == 0 {
+                    mainIceBlocks.append(block)
+                }
                 
                 block.addChild(label)
                 blocks.append(block)
@@ -339,6 +343,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             contactBloks.append(spritea)
         }
         
+        if spritea.name != "bottomSprite" && spriteb.name != "bottomSprite" {
+            if mainIceBlocks.contains(spritea) {
+                // spriteb buz yap
+                let label = spriteb.children[0] as! SKLabelNode
+                setIce(sprite: spriteb, label: label)
+            }
+            
+            if mainIceBlocks.contains(spriteb) {
+                // sprite a buz yap
+                let label = spritea.children[0] as! SKLabelNode
+                setIce(sprite: spritea, label: label)
+            }
+        }
+        
         if falled {
         
             if !deleted {
@@ -383,6 +401,23 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     
+    func setIce(sprite: SKSpriteNode, label: SKLabelNode) {
+        if label.color != .cyan {
+            let clickShape = SKShapeNode(rect: CGRect(x:0, y:0, width: 70, height: 75))
+            
+            clickShape.strokeColor = .red
+            clickShape.fillColor = .cyan
+            clickShape.lineWidth = 5
+            clickShape.lineCap = .round
+            label.fontColor = .black
+            label.color = .cyan
+            
+            let texture = view?.texture(from: clickShape)
+            
+            sprite.texture = texture
+        }
+    }
+    
     func clicked(sprite: SKSpriteNode, label: SKLabelNode) {
         
         let clickShape = SKShapeNode(rect: CGRect(x:0, y:0, width: 70, height: 75))
@@ -401,8 +436,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
         let clickShape = SKShapeNode(rect: CGRect(x:0, y:0, width: 70, height: 75))
         clickShape.strokeColor = .red
-        
-        if label.color == .cyan {
+        if mainIceBlocks.contains(sprite) {
+            clickShape.fillColor = .systemBlue
+        } else if label.color == .cyan {
             clickShape.fillColor = .cyan
         } else {
             clickShape.fillColor = .green
@@ -493,7 +529,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                         // burada kelime kontrolü yapılacak
                         let text = wordLabel.text!.replacingOccurrences(of: " ", with: "")
                         
-                        if getWordsWithText(word: "deliorman") {
+                        if getWordsWithText(word: text) {
                             
                             if blocks.count > 0{
                                 
@@ -511,10 +547,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                                 for iceSprite in iceBlocks {
                                     let label = iceSprite.children[0] as! SKLabelNode
                                     let newBoxLabel = label.text?.replacingOccurrences(of: " ", with: "")
+                                    if let index = mainIceBlocks.lastIndex(of: iceSprite) {
+                                        mainIceBlocks.remove(at: index)
+                                    }
                                     label.text = newBoxLabel
                                     label.color = .green
                                     doubleClicked(sprite: iceSprite, label: label)
                                     iceBlocks.removeAll()
+                                    
+                                    
+                                    
                                 }
                                 
                                 calculatePoint(label: wordLabel.text!)
